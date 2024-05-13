@@ -6,6 +6,8 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use function Laravel\Prompts\error;
+
 class NumChecker
 {
     /**
@@ -13,12 +15,14 @@ class NumChecker
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-
     public function handle(Request $request, Closure $next): Response
     {
         $income = $request->income;
 
-        is_numeric($income) ? $request->attributes->add(["isTrue" => true]) : $request->attributes->add(["isTrue" => false]);
+        if (!is_numeric($income) || $income <= 0) {
+            session()->flash("errors", ["Income must be positive and numerical"]);
+            return redirect()->back();
+        }
 
         return $next($request);
     }

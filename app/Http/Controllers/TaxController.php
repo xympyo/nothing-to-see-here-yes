@@ -12,28 +12,16 @@ class TaxController extends Controller
     {
         $income = $request->income;
 
-        if (!is_null($income)) {
-            $average = DB::table('rates')
-                ->where('income_from', '<=', $income)
-                ->where('income_to', '>=', $income)
-                ->select('percentage')
-                ->get();
-        }
-
-        if ($request->attributes->get('isTrue')) {
+        $average = DB::table('rates')
+            ->where('income_from', '<=', $income)
+            ->where('income_to', '>=', $income)
+            ->select('percentage')
+            ->get();
+        if ($average) {
             $tax = $income * ($average[0]->percentage / 100);
-            $trueValue = $request->attributes->get("isTrue");
             return view("calculate", [
-                "tax" => $tax,
-                "trueValue" => $trueValue
-            ]);
-        } else {
-            $trueValue = $request->attributes->get("isTrue");
-            return view("calculate", [
-                "trueValue" => $trueValue
+                "tax" => $tax
             ]);
         }
-
-        return view("calculate.form");
     }
 }

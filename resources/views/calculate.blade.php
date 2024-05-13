@@ -21,15 +21,16 @@
         @method('post')
         <input type="text" id="income" name="income" placeholder="Enter Income Value">
         <button type="submit">Calculate Tax</button>
-        @if(!$trueValue)
-        <p>Income must be positive and numerical</p>
-        @else
-        <p>Tax is {{ $tax }}</p>
+        @if (session('errors'))
+            @foreach (session('errors') as $error)
+                <p>{{ $error }}</p>
+            @endforeach
+        @endif
+        @if (isset($tax))
+            <p>Tax is {{ $tax }}</p>
         @endif
     </form>
 </body>
-<script>
-
-</script>
+<script></script>
 
 </html>
