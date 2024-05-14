@@ -17,9 +17,7 @@ class NumChecker
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $income = $request->income;
-
-        if (!is_numeric($income) || $income <= 0) {
+        if (!is_numeric($request->income) || $request->income <= 0) {
             session()->flash("errors", ["Income must be positive and numerical"]);
             return redirect()->back();
         }

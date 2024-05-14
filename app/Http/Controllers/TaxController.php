@@ -17,15 +17,13 @@ class TaxController extends Controller
 
     public function calculate(Request $request)
     {
-        $income = $request->income;
-
         $average = DB::table('rates')
-            ->where('income_from', '<=', $income)
-            ->where('income_to', '>=', $income)
+            ->where('income_from', '<=', $request->income)
+            ->where('income_to', '>=', $request->income)
             ->select('percentage')
             ->get();
         if ($average) {
-            $tax = $income * ($average[0]->percentage / 100);
+            $tax = $request->income * ($average[0]->percentage / 100);
             return view("calculate", [
                 "tax" => $tax
             ]);
