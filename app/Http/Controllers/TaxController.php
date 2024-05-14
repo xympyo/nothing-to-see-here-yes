@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\DB;
 
 class TaxController extends Controller
 {
+    public function passView()
+    {
+        return view("calculate", [
+            "prevVal" => null
+        ]);
+    }
+
     public function calculate(Request $request)
     {
         $income = $request->income;

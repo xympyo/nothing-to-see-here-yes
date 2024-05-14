@@ -8,8 +8,8 @@
     <style>
         body {
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             height: 100vh;
         }
     </style>
@@ -22,15 +22,12 @@
         <input type="text" id="income" name="income" placeholder="Enter Income Value">
         <button type="submit">Calculate Tax</button>
         @if (session('errors'))
-            @foreach (session('errors') as $error)
-                <p>{{ $error }}</p>
-            @endforeach
+            <p>{{ session('errors')[0] }}</p>
         @endif
         @if (isset($tax))
             <p>Tax is {{ $tax }}</p>
         @endif
     </form>
 </body>
-<script></script>
 
 </html>

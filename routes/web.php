@@ -2,8 +2,8 @@
 
 use App\Http\Middleware\NumChecker;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TaxController;
 
-Route::get("/calculate", function () {
-    return view("calculate");
-})->name("calculate");
-Route::post("/calculate", [App\Http\Controllers\TaxController::class, "calculate"])->middleware([NumChecker::class])->name("calculate.cal");
+Route::get("/calculate", [TaxController::class, "passView"])->name("calculate");
+
+Route::post("/calculate", [TaxController::class, "calculate"])->middleware([NumChecker::class])->name("calculate.cal");
